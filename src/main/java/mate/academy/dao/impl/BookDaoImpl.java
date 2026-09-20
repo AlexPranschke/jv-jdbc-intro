@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.BookDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.Book;
 import mate.academy.util.ConnectionUtil;
@@ -27,17 +28,17 @@ public class BookDaoImpl implements BookDao {
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows < 1) {
-                throw new RuntimeException("Creating book failed, no rows affected.");
+                throw new DataProcessingException("Creating book failed, no rows affected.");
             }
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 Long id = generatedKeys.getObject(1, Long.class);
                 book.setId(id);
             } else {
-                throw new RuntimeException("Creating book failed, no ID obtained.");
+                throw new DataProcessingException("Creating book failed, no ID obtained.");
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Can't create book " + book, e);
+            throw new DataProcessingException("Can't create book " + book, e);
         }
         return book;
     }
@@ -58,7 +59,7 @@ public class BookDaoImpl implements BookDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Can't get book by id " + id, e);
+            throw new DataProcessingException("Can't get book by id " + id, e);
         }
         return null;
     }
@@ -78,7 +79,7 @@ public class BookDaoImpl implements BookDao {
                 return Optional.of(book);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Can't find book by id " + id, e);
+            throw new DataProcessingException("Can't find book by id " + id, e);
         }
         return Optional.empty();
     }
@@ -93,10 +94,10 @@ public class BookDaoImpl implements BookDao {
             preparedStatement.setLong(3, book.getId());
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows < 1) {
-                throw new RuntimeException("Updating book failed, no rows affected.");
+                throw new DataProcessingException("Updating book failed, no rows affected.");
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Can't update book " + book, e);
+            throw new DataProcessingException("Can't update book " + book, e);
         }
         return book;
     }
@@ -111,7 +112,7 @@ public class BookDaoImpl implements BookDao {
             int affectedRows = preparedStatement.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Can't delete book by id " + id, e);
+            throw new DataProcessingException("Can't delete book by id " + id, e);
         }
     }
 
@@ -135,7 +136,7 @@ public class BookDaoImpl implements BookDao {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Can't get all books", e);
+            throw new DataProcessingException("Can't get all books", e);
         }
 
         return books;
