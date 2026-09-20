@@ -1,13 +1,9 @@
 package mate.academy;
 
+import java.math.BigDecimal;
 import mate.academy.dao.BookDao;
-import mate.academy.dao.impl.BookDaoImpl;
 import mate.academy.lib.Injector;
 import mate.academy.model.Book;
-
-import java.math.BigDecimal;
-import java.sql.*;
-import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,7 +18,5 @@ public class Main {
         bookDao.create(book);
 
         System.out.println(bookDao.findById(20L));
-
-
     }
 }

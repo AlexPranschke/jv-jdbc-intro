@@ -1,9 +1,8 @@
 package mate.academy.dao;
 
-import mate.academy.model.Book;
-
 import java.util.List;
 import java.util.Optional;
+import mate.academy.model.Book;
 
 public interface BookDao {
     //crud
@@ -12,6 +11,7 @@ public interface BookDao {
 
     //read
     Book get(Long id);
+
     Optional<Book> findById(Long id);
 
     //update
@@ -22,11 +22,4 @@ public interface BookDao {
 
     //finally, we can add a method to find all books
     List<Book> findAll();
-/*
-- Book create(Book book); k
-- Optional<Book> findById(Long id); k
-- List<Book> findAll();
-- Book update(Book book);
-- boolean deleteById(Long id);
- */
 }
